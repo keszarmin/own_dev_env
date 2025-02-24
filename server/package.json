@@ -1,0 +1,22 @@
+{
+   "name": "server",
+   "version": "1.0.0",
+   "main": "index.js",
+   "author": "armin",
+   "license": "MIT",
+   "dependencies": {
+      "@types/express": "^5.0.0",
+      "dotenv": "^16.4.7",
+      "pg": "^8.4.0",
+      "reflect-metadata": "^0.1.13",
+      "typeorm": "0.3.20"
+   },
+   "devDependencies": {
+      "@types/node": "22.13.5",
+      "ts-node": "^10.9.2"
+   },
+   "scripts": {
+      "start": "ts-node src/index.ts",
+      "typeorm": "typeorm-ts-node-commonjs"
+   }
+}
