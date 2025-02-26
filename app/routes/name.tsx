@@ -1,5 +1,4 @@
 import type { Route } from "./+types/register";
-import { Username } from "~/welcome/auth";
 import { useNavigate } from "react-router";
 
 export function meta({}: Route.MetaArgs) {

@@ -3,7 +3,7 @@ import { Entity, Column, PrimaryGeneratedColumn,PrimaryColumn } from "typeorm"
 @Entity()
 export class model {
 
-    @PrimaryColumn("integer")
+    @PrimaryGeneratedColumn()
     id: number;
 
     @Column("text")
@@ -20,4 +20,17 @@ export class model {
 
     @Column("text")
     hash: string
+}
+
+@Entity()
+export class user_datas {
+        
+    @PrimaryGeneratedColumn()
+    id: number;
+
+    @Column("text")
+    username: string
+
+    @Column("text")
+    password: string
 }

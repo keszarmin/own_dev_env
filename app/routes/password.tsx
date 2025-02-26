@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import type { Route } from "./+types/team";
+import axios from "axios";
 
 export async function loader({ params }: Route.LoaderArgs) {
     return {name : params.name}
@@ -16,8 +17,17 @@ export default function Component({
     const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     
       if (event.key === "Enter") {
-        navigate(`${loaderData.name}`)
-        
+ /*       (async () => {
+          try {
+            const logInData:boolean = await axios.post("http://localhost:4000/login",{name:loaderData.name,password:event.target.value})
+            if (logInData === true) {
+              alert("yess")
+            } else alert(logInData)
+            
+          } catch (error) {
+            alert(error)
+          }
+        })*/
       }
     };
 
