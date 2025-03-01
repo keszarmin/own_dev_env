@@ -20,6 +20,12 @@ export class model {
 
     @Column("text")
     hash: string
+
+    @Column("text")
+    owner: string
+
+    @Column("text")
+    owner_password
 }
 
 @Entity()

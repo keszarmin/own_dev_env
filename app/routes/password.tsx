@@ -1,38 +1,49 @@
-import { useState } from "react";
+import { useState,useRef } from "react";
 import { useNavigate } from "react-router";
 import type { Route } from "./+types/team";
 import axios from "axios";
+import ErrorWindowAlert from "./ErrorWindowAlert";
 
 export async function loader({ params }: Route.LoaderArgs) {
     return {name : params.name}
 }
 
-export default function Component({
+export default function Password({
     loaderData,
 }: Route.ComponentProps) {
 
-    const [IsVisible, setIsVisible] = useState("password")
-    let navigate = useNavigate();
-  
-    const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    const [IsVisible, setIsVisible] = useState<string>("password");
+    const [Password, setPassword] = useState<string>("");
+    const [ErrWindowAlert, setErrWindowAlert] = useState<[boolean,string]>([false,"something went wrong"]);
+    const InputRef = useRef<HTMLInputElement>(null);
     
+    let navigate = useNavigate();
+
+
+
+    const handleKeyPress = async (event: React.KeyboardEvent<HTMLInputElement>) => {
+      
       if (event.key === "Enter") {
- /*       (async () => {
-          try {
-            const logInData:boolean = await axios.post("http://localhost:4000/login",{name:loaderData.name,password:event.target.value})
-            if (logInData === true) {
-              alert("yess")
-            } else alert(logInData)
-            
-          } catch (error) {
-            alert(error)
-          }
-        })*/
-      }
+      if (Password === null || Password === "") setErrWindowAlert([true,"Fill in the password input!"]);
+      else {
+          axios.post("http://localhost:4000/login/",{
+            username:loaderData.name,
+            password:Password
+          }).then((response) => {
+            if (response.data === true) {
+              navigate(`/main/${loaderData.name}`, { state: Password});
+            } else {
+              setErrWindowAlert([true,"This password is not matching one of passwords from our database!"]);
+            }
+          }).catch((err) => console.log(err));
+      }}
     };
 
     return (
         <main className="flex flex-col items-center justify-center w-screen h-screen bg-gray-950 text-gray-700">
+
+        <ErrorWindowAlert apear={ErrWindowAlert[0]} IN_data={ErrWindowAlert[1]} />
+
         <div>
           <div className="flex items-center justify-between">
             <label htmlFor="password" className="block text-sm text-gray-500 dark:text-gray-300">
@@ -62,6 +73,8 @@ export default function Component({
             </button>
 
             <input 
+              ref={InputRef}
+              onKeyUp={(e) => setPassword(e.target.value)}
               onKeyDown={handleKeyPress}
               type={IsVisible}
               placeholder="********"

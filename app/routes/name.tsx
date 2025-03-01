@@ -18,6 +18,7 @@ export default function Name() {
 
     return (
   <main className="flex flex-col items-center justify-center w-screen h-screen bg-gray-950 text-gray-700">
+
     <div>
       <div className="flex items-center justify-between">
         <label htmlFor="password" className="block text-sm text-gray-500 dark:text-gray-300">
